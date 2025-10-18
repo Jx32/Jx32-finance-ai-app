@@ -1,0 +1,7 @@
+{
+  "name": "finance-ai-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
