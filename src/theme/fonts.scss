@@ -1,0 +1,67 @@
+/* Base */
+html {
+  font-size: 100%; /* 16px */
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  color: #1E1B24;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* Headings */
+h1, h2, h3, h4, ion-title, ion-list-header {
+  font-weight: 700;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.02em;
+  color: #1E1B24;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2rem;     /* 32px */
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.75rem;  /* 28px */
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.5rem;   /* 24px */
+  line-height: 1.35;
+}
+
+h4 {
+  font-size: 1.25rem;  /* 20px */
+  line-height: 1.4;
+}
+
+/* Body text */
+p {
+  font-size: 1rem;     /* 16px */
+  line-height: 1.6;
+  margin: 0 0 1em;
+}
+
+/* Small text */
+small {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  color: #6B7280; /* secondary text */
+}
+
+@media (min-width: 768px) {
+  h1 { font-size: 2.5rem; }   /* 40px */
+  h2 { font-size: 2rem; }     /* 32px */
+  h3 { font-size: 1.75rem; }  /* 28px */
+  h4 { font-size: 1.5rem; }   /* 24px */
+  p  { font-size: 1.125rem; } /* 18px */
+}
+
+.regular-font {
+  font-weight: 400;
+}
