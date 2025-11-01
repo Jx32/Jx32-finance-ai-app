@@ -1,0 +1,41 @@
+@use "tailwindcss";
+
+@theme {
+	--color-primary: var(--ion-color-primary);
+	--color-secondary: var(--ion-color-secondary);
+	--color-tertiary: var(--ion-color-tertiary);
+	--color-success: var(--ion-color-success);
+	--color-warning: var(--ion-color-warning);
+	--color-danger: var(--ion-color-danger);
+	--color-light: var(--ion-color-light);
+	--color-medium: var(--ion-color-medium);
+	--color-dark: var(--ion-color-dark);
+	--color-transparent: transparent;
+	--color-inactive: oklch(0.9276 0.0058 264.53);
+
+	--text-color-headings: var(--ion-color-dark);
+	--text-color-white: var(--ion-color-light);
+	--shadow-input-focus: 0px 0px 0px 3px rgba(var(--ion-color-primary-rgb), 0.25);
+
+	--animate-fade-in: fadeIn 350ms ease-out forwards;
+
+	@keyframes fadeIn {
+		0% {
+			transform: translateY(-10px);
+			opacity: 0;
+		}
+
+		100% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+}
+
+@mixin sequential-transition($count, $delay-increment: 0.1s) {
+  @for $i from 1 through $count {
+    &:nth-child(#{$i}) {
+      transition-delay: ($i - 1) * $delay-increment;
+    }
+  }
+}

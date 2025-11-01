@@ -1,17 +1,6 @@
-@import url("./fonts.scss");
+@use "./custom-theme.scss";
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-
-html {
-    --ion-dynamic-font: 'Manrope', sans-serif;
-	--ion-font-family: 'Manrope', sans-serif;
-
-    --ion-background-color: #F9FAFB;
-    --ion-background-color-rgb: 249,250,251;
-
-    --ion-text-color: #4B5563;
-    --ion-text-color-rgb: 75,85,99;
-}
 
 :root {
 	--ion-color-primary: #7C3AED;
@@ -82,10 +71,24 @@ html {
 
     --ion-background-color: #F9FAFB;
     --ion-background-color-rgb: 249,250,251;
+}
+
+html {
+    --ion-dynamic-font: 'Manrope', sans-serif;
+	--ion-font-family: 'Manrope', sans-serif;
+
+    --ion-background-color: #F9FAFB;
+    --ion-background-color-rgb: 249,250,251;
 
     --ion-text-color: #4B5563;
     --ion-text-color-rgb: 75,85,99;
 }
+
+@import url("./fonts.scss");
+@import url("./spacing.scss");
+@import url("./containers.scss");
+@import url("./custom-components.scss");
+
 
 ion-menu {
   --width: 100vw;

@@ -1,0 +1,6 @@
+@use "tailwindcss";
+
+ion-content {
+    --padding-start: --spacing(3);
+    --padding-end: --spacing(3);
+}

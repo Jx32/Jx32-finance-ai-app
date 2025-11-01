@@ -1,3 +1,5 @@
+@use "./custom-theme.scss";
+
 /* Base */
 html {
   font-size: 100%; /* 16px */
@@ -63,5 +65,9 @@ small {
 }
 
 .regular-font {
-  font-weight: 400;
+  @apply font-normal;
+}
+
+ion-button {
+  @apply font-bold;
 }

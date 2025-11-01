@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>summary</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [showBackUIOnly]="true" title="Personal finances"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">summary</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+
+  <div class="main-content-container">
+
+    <div class="segment-container">
+      <ion-segment value="financeSummary" [scrollable]="true" [swipeGesture]="false" >
+        <ion-segment-button value="financeSummary" content-id="financeSummary">
+          <ion-label>Finance summary</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="aiForecasts" content-id="aiForecasts">
+          <ion-label>AI.Forecasts</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="loans" content-id="loans">
+          <ion-label>Loans</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="services" content-id="services">
+          <ion-label>Services</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <ion-segment-view>
+      <ion-segment-content id="financeSummary" class="main-content-container">
+        
+        <div class="w-full flex flex-row justify-end p-1">
+          <ion-select interface="popover" value="paymentCycle" toggleIcon="filter" class="w-fit">
+            <ion-select-option value="paymentCycle">Payment cycle</ion-select-option>
+            <ion-select-option value="month">This month</ion-select-option>
+            <ion-select-option value="quarter">This quarter</ion-select-option>
+            <ion-select-option value="year">This year</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div>
+          <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
+        </div>
+        
+      </ion-segment-content>
+
+      <ion-segment-content id="aiForecasts">
+        AI Forecasts content goes here.
+      </ion-segment-content>
+    </ion-segment-view>
+
+  </div>
+
 </ion-content>

@@ -1,0 +1,100 @@
+@use "./custom-theme.scss";
+
+ion-segment {
+    --background: @apply bg-transparent;
+}
+
+ion-segment-button {    
+    --background: theme('colors.transparent');
+    --indicator-color: theme('colors.gray.200');
+    --indicator-box-shadow: none;
+    --transition: all 250ms;
+    --border-radius: theme('borderRadius.full');
+
+    font: inherit;
+
+    @apply p-1;
+}
+
+ion-item.form-input {
+    --border-style: solid;
+    --border-width: 1px;
+    --border-radius: theme('borderRadius.xl');
+
+    --transition: all 250ms;
+
+    --highlight-color-focused: var(--ion-color-primary) !important;
+}
+
+/* IonSelect customization */
+ion-select {
+    --padding-start: --spacing(3);
+    --padding-end: --spacing(3);
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+
+    @apply bg-transparent rounded-xl border border-inactive border-solid transition-all duration-250;
+}
+ion-select::part(icon) {
+    @apply transition-all duration-250;
+}
+
+ion-select:hover,
+ion-select:focus {
+    @apply border-primary shadow-input-focus bg-white;
+}
+
+ion-select:hover::part(icon),
+ion-select:focus::part(icon) {
+    @apply text-primary!;
+}
+
+/* Select popover customization */
+ion-popover.select-popover,
+ion-select-popover {
+    --box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    --background: theme("colors.dark");
+    border-style: none;
+    border-width: 0;
+    border-color: transparent;
+
+    @apply transition-all duration-250 p-2 backdrop-grayscale-25;
+}
+ion-popover.select-popover ion-list {
+    background: transparent;
+}
+ion-popover.select-popover ion-item {
+    --border-width: 0px;
+    --border-style: none;
+    --border-color: transparent;
+    --background: transparent;
+    --color: theme("colors.light");
+
+    // fade in animation
+    transform: translateY(-10px);
+    opacity: 0;
+    animation: var(--animate-fade-in);
+
+    // increment delay for each item
+    @for $i from 10 through 1 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{($i * 0.1)}s;
+        }
+    }
+
+    @apply py-1 rounded-xl;
+}
+ion-popover.select-popover ion-item ion-radio::part(container) {
+    --color-checked: var(--ion-color-primary-tint);
+}
+
+ion-select::part(icon) {
+    padding-left: --spacing(3);
+}
+ion-select::part(text) {
+    color: theme('text-color-headings');
+}
+ion-select::part(icon) {
+    color: theme('text-color-headings');
+}
+/* END IonSelect customization */
