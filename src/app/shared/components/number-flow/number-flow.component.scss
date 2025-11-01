@@ -1,0 +1,10 @@
+:host {
+  --number-flow-char-height: var(--number-flow-char-height, 1em);
+  --number-flow-mask-height: var(--number-flow-mask-height, 0.25em);
+  --number-flow-mask-width: var(--number-flow-mask-width, 0.5em);
+  font-variant-numeric: tabular-nums;
+}
+
+number-flow {
+  all: inherit;
+}

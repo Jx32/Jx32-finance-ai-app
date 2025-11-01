@@ -98,3 +98,17 @@ ion-select::part(icon) {
     color: theme('text-color-headings');
 }
 /* END IonSelect customization */
+
+/* Card customizations */
+.card-container {
+    @apply flex flex-col border-1 border-inactive border-solid rounded-xl gap-3 p-6
+}
+
+ion-card.alert-card {
+    @apply flex flex-row gap-3
+}
+/* END Card customizations */
+
+/* IonButton customization */
+
+/* END IonButton customization */

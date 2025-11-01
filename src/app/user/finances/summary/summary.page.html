@@ -1,11 +1,11 @@
-<app-header [showBackUIOnly]="true" title="Personal finances"></app-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true" [scrollEvents]="true">
 
   <div class="main-content-container">
 
     <div class="segment-container">
-      <ion-segment value="financeSummary" [scrollable]="true" [swipeGesture]="false" >
+      <ion-segment value="financeSummary" [scrollable]="true" [swipeGesture]="false">
         <ion-segment-button value="financeSummary" content-id="financeSummary">
           <ion-label>Finance summary</ion-label>
         </ion-segment-button>
@@ -23,7 +23,7 @@
 
     <ion-segment-view>
       <ion-segment-content id="financeSummary" class="main-content-container">
-        
+
         <div class="w-full flex flex-row justify-end p-1">
           <ion-select interface="popover" value="paymentCycle" toggleIcon="filter" class="w-fit">
             <ion-select-option value="paymentCycle">Payment cycle</ion-select-option>
@@ -33,10 +33,53 @@
           </ion-select>
         </div>
 
-        <div>
+        <div class="h-30 w-full">
           <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
         </div>
-        
+
+        <div class="card-container">
+          <div class="flex flex-column justify-between items-center">
+            <h3>Payment cycle</h3>
+            <div class="">March 13 to 19</div>
+          </div>
+          <div class="flex flex-row gap-3">
+            <ion-button color="secondary">
+              <ion-icon slot="start" name="add" color="success"></ion-icon>
+              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>
+            </ion-button>
+            <ion-button color="secondary">
+              <ion-icon slot="start" name="remove" color="danger"></ion-icon>
+              $12,320
+            </ion-button>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <h3>AI Alerts <ion-badge color="danger" class="p-1">11</ion-badge></h3>
+          <div class="flex flex-col gap-2">
+            <ion-button color="secondary">
+              <div class="flex flex-row gap-3 w-full items-center justify-start text-left">
+                <ion-icon slot="start" name="notifications-outline" class="text-2xl"></ion-icon>
+                <div class="flex flex-col gap-1">
+                  <strong>Internet service might be unpayable</strong>
+                  <span class="font-normal">Not enough money to pay</span>
+                </div>
+              </div>
+
+            </ion-button>
+
+            <ion-button color="secondary">
+              <div class="flex flex-row gap-3 w-full items-center justify-start text-left">
+                <ion-icon slot="start" name="notifications-outline" class="text-2xl"></ion-icon>
+                <div class="flex flex-col gap-1">
+                  <strong>Internet service might be unpayable</strong>
+                  <span class="font-normal">Not enough money to pay</span>
+                </div>
+              </div>
+            </ion-button>
+          </div>
+        </div>
+
       </ion-segment-content>
 
       <ion-segment-content id="aiForecasts">

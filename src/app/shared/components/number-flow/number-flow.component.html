@@ -1,0 +1,20 @@
+<number-flow
+  [attr.aria-label]="data().valueAsString"
+  role="img"
+  [attr.data-will-change]="willChange() ? '' : undefined"
+  (animationsstart)="animationsstart.emit()"
+  (animationsfinish)="animationsfinish.emit()"
+  [transformTiming]="transformTiming()"
+  [spinTiming]="spinTiming()"
+  [opacityTiming]="opacityTiming()"
+  [animated]="animated()"
+  [respectMotionPreference]="respectMotionPreference()"
+  [trend]="trend()"
+  [plugins]="plugins()"
+  [digits]="digits()"
+  [data]="data()"
+>
+  @if (isBrowser) {
+    <span [innerHTML]="innerHtml()"></span>
+  }
+</number-flow>
