@@ -1,5 +1,9 @@
 @use "./custom-theme.scss";
 
+ion-content::part(scroll) {
+    @apply flex flex-col gap-4 justify-start items-center
+}
+
 .main-content-container {
-    @apply flex flex-col gap-6;
+    @apply flex flex-col gap-6 justify-center items-center sm:w-full md:w-150 xl:w-200
 }

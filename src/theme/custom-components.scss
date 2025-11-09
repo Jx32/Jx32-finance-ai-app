@@ -1,5 +1,21 @@
 @use "./custom-theme.scss";
 
+// Remove bottom toolbar gray border
+ion-toolbar:last-of-type {
+    --border-width: 0 !important;
+}
+
+ion-menu {
+    @media (width <= 48rem) {
+        --width: 100vw !important;
+    }
+    
+    @media (width > 48rem) {
+        --width: 50vw;
+    }
+}
+
+/* IonSegment customization */
 ion-segment {
     --background: @apply bg-transparent;
 }
@@ -14,6 +30,11 @@ ion-segment-button {
     font: inherit;
 
     @apply p-1;
+}
+/* END IonSegment customization */
+
+ion-item::part(native) {
+    @apply gap-4 items-center
 }
 
 ion-item.form-input {
@@ -33,7 +54,7 @@ ion-select {
     --padding-top: 0 !important;
     --padding-bottom: 0 !important;
 
-    @apply bg-transparent rounded-xl border border-inactive border-solid transition-all duration-250;
+    @apply rounded-xl transition-all duration-250;
 }
 ion-select::part(icon) {
     @apply transition-all duration-250;
@@ -49,19 +70,47 @@ ion-select:focus::part(icon) {
     @apply text-primary!;
 }
 
+/* IonPopover customization */
+ion-popover {
+    --width: 70vw;
+
+    @media (width > 48rem) {
+        --width: 50vw;
+    }
+    @media (width > 64rem) {
+        --width: 40vw;
+    }
+    @media (width > 80rem) {
+        --width: 30vw;
+    }
+    @media (width > 96rem) {
+        --width: 20vw;
+    }
+}
+/* END IonPopover customization */
+
 /* Select popover customization */
 ion-popover.select-popover,
 ion-select-popover {
     --box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     --background: theme("colors.dark");
-    border-style: none;
-    border-width: 0;
-    border-color: transparent;
 
-    @apply transition-all duration-250 p-2 backdrop-grayscale-25;
+    @apply transition-all duration-250 p-2 backdrop-grayscale-25 border-0 border-transparent border-none;
 }
 ion-popover.select-popover ion-list {
-    background: transparent;
+    @apply bg-transparent
+}
+ion-popover.select-popover ion-content {
+    --padding-start: --spacing(4);
+    --padding-end: --spacing(4);
+    --pading-top: --spacing(2);
+    --pading-bottom: --spacing(2);
+    --background: transparent;
+
+    @apply overflow-hidden
+}
+ion-popover.select-popover ion-radio-group {
+    @apply w-full
 }
 ion-popover.select-popover ion-item {
     --border-width: 0px;
@@ -69,6 +118,7 @@ ion-popover.select-popover ion-item {
     --border-color: transparent;
     --background: transparent;
     --color: theme("colors.light");
+    --border-radius: 12px;
 
     // fade in animation
     transform: translateY(-10px);
@@ -82,10 +132,17 @@ ion-popover.select-popover ion-item {
         }
     }
 
-    @apply py-1 rounded-xl;
+    @apply py-1 rounded-xl transition-all duration-250
 }
 ion-popover.select-popover ion-item ion-radio::part(container) {
-    --color-checked: var(--ion-color-primary-tint);
+    --color-checked: theme("colors.blue.900");
+}
+ion-popover.select-popover ion-item:has(ion-radio.radio-checked) {
+    --background: theme("colors.blue.200");
+    --color: theme("colors.blue.900");
+    --color-checked: theme("colors.blue.900");
+    
+    @apply font-bold
 }
 
 ion-select::part(icon) {
@@ -101,7 +158,7 @@ ion-select::part(icon) {
 
 /* Card customizations */
 .card-container {
-    @apply flex flex-col border-1 border-inactive border-solid rounded-xl gap-3 p-6
+    @apply flex flex-col rounded-xl gap-3 py-3 w-full
 }
 
 ion-card.alert-card {
@@ -112,3 +169,37 @@ ion-card.alert-card {
 /* IonButton customization */
 
 /* END IonButton customization */
+
+/* IonChip customization */
+ion-chip {
+    @apply px-4 py-1
+}
+/* END IonChip customization */
+
+/* Input customizations */
+ion-searchbar {
+    --placeholder-color: theme("colors.neutral.500");
+    --icon-color: theme("colors.neutral.500");
+    --placeholder-font-weight: 400;
+
+    @apply px-0! p-0!
+}
+/* END Input customization */
+
+ion-note {
+    @apply text-neutral-500 
+}
+
+.fade-in-ion-items ion-item {
+    // fade in animation
+    transform: translateY(-10px);
+    opacity: 0;
+    animation: var(--animate-fade-in);
+
+    // increment delay for each item
+    @for $i from 100 through 1 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{($i * 0.1)}s;
+        }
+    }
+}

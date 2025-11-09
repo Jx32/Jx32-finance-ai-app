@@ -19,6 +19,10 @@
 
 	--animate-fade-in: fadeIn 250ms ease-out forwards;
 
+	--breakpoint-sm: 24rem; // 24rem (384px)
+	--breakpoint-2xl: 42rem; // 42rem (672px)
+	--breakpoint-3xl: 48rem; // 48rem (768px)
+
 	@keyframes fadeIn {
 		0% {
 			transform: translateY(-10px);

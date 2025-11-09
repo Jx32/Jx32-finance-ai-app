@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonItem, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonLabel, IonButton, IonIcon, IonBackButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, notifications, notificationsOutline, personCircle, personCircleOutline } from 'ionicons/icons';
+import { arrowBack, chatbubbles, chatbubblesOutline, notifications, notificationsOutline, personCircle, personCircleOutline, sparkles } from 'ionicons/icons';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +18,7 @@ export class HeaderComponent  implements OnInit {
   @Input() defaultHref: string = "/home";
 
   constructor() {
-    addIcons({notifications,personCircle,arrowBack});
+    addIcons({notificationsOutline, chatbubblesOutline,notifications,personCircle,arrowBack,chatbubbles,sparkles});
   }
 
   ngOnInit() {}

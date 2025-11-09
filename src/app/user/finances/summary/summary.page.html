@@ -1,92 +1,139 @@
-<app-header></app-header>
+<app-header title="Personal finances"></app-header>
 
 <ion-content [fullscreen]="true" [scrollEvents]="true">
 
   <div class="main-content-container">
 
-    <div class="segment-container">
-      <ion-segment value="financeSummary" [scrollable]="true" [swipeGesture]="false">
-        <ion-segment-button value="financeSummary" content-id="financeSummary">
-          <ion-label>Finance summary</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="aiForecasts" content-id="aiForecasts">
-          <ion-label>AI.Forecasts</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="loans" content-id="loans">
-          <ion-label>Loans</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="services" content-id="services">
-          <ion-label>Services</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+    <div class="card-container">
+      <div class="w-full items-center justify-start flex flex-row gap-2">
+        <ion-button size="small" color="medium" fill="dark" shape="round" slot="start" id="filter-popover">
+          <ion-icon slot="icon-only" name="filter"></ion-icon>
+        </ion-button>
+        
+        <ion-popover trigger="filter-popover" triggerAction="click" class="select-popover">
+          <ng-template>
+            <ion-content>
+              <div class="flex flex-col items-start justify-start gap-2 py-4 w-full">
+                <div class="text-neutral-500 text-sm font-bold">
+                  Filter
+                </div>
+                <ion-radio-group value="paymentCycle">
+                  <ion-list>
+                    <ion-item lines="none">
+                      <ion-radio value="paymentCycle">
+                        Payment cycle<br />
+                        <span class="text-neutral-500">March 15 to 31</span>
+                      </ion-radio>
+                    </ion-item>
+                    <ion-item lines="none">
+                      <ion-radio value="thisMonth">
+                        This month<br />
+                        <span class="text-neutral-500">March</span>
+                      </ion-radio>
+                    </ion-item>
+                    <ion-item lines="none">
+                      <ion-radio value="lastTwoMonths">
+                        Last 2 months<br />
+                        <span class="text-neutral-500">January, February</span>
+                      </ion-radio>
+                    </ion-item>
+                    <ion-item lines="none">
+                      <ion-radio value="lastSixMonths">
+                        Last 6 months<br />
+                        <span class="text-neutral-500">July 2024 to February 2025</span>
+                      </ion-radio>
+                    </ion-item>
+                    <ion-item lines="none">
+                      <ion-radio value="thisYear">
+                        This year<br />
+                        <span class="text-neutral-500">2025</span>
+                      </ion-radio>
+                    </ion-item>
+                  </ion-list>
+                </ion-radio-group>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+
+        <ion-chip color="medium" slot="start">
+          <ion-label>Payment cycle <span class="text-neutral-500 ">— March 15 to 31</span></ion-label>
+        </ion-chip>
+      </div>
+
+      <div class="h-30 w-full">
+        <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
+      </div>
+
+      <div class="card-container">
+        <div class="text-lg font-bold">
+          Balance
+        </div>
+        <div class="flex flex-row justify-evenly items-center">
+          <div class="flex flex-col items-start justify-center">
+            <div class="font-bold flex flex-row gap-2 items-center text-green-700">
+              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
+            </div>
+            <div class="text-neutral-500">Earned</div>
+          </div>
+
+          <div class="text-xl font-bold text-neutral-500">-</div>
+
+          <div class="flex flex-col items-start justify-center">
+            <div class="font-bold flex flex-row gap-2 items-center text-red-700">
+              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
+            </div>
+            <div class="text-neutral-500">Spent</div>
+          </div>
+
+          <div class="text-xl font-bold text-neutral-500">=</div>
+          
+          <div class="flex flex-col items-start justify-center">
+            <div class="font-bold flex flex-row gap-2 items-center">
+              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
+            </div>
+            <div class="text-neutral-500">Remaining</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card-container fade-in-ion-items">
+        <div class="text-lg font-bold">Details</div>
+
+        <div>
+          <ion-searchbar placeholder="Search" animated="true" searchIcon="search" inputmode="search" enterkeyhint="search" debounce="1000" cancelButtonIcon="close" clearIcon="close"></ion-searchbar>
+          <div class="text-sm text-neutral-500">
+            Found 5 results
+          </div>
+        </div>
+
+        <!-- Detail list -->
+        <ion-item lines="none">
+          <fa-icon [icon]="faBowlRice" slot="start" class="text-red-700" />
+          <div class="flex flex-col" slot="start">
+            <ion-label>Chinese Raise</ion-label>
+            <div class="flex flex-row gap-2">
+              <ion-note>-$10</ion-note>
+              <ion-note>Delivery food</ion-note>
+            </div>
+          </div>
+          <ion-label slot="end">15/03/25</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <fa-icon [icon]="faBriefcase" slot="start" class="text-green-700" />
+          <div class="flex flex-col">
+            <ion-label>Work payment</ion-label>
+            <div class="flex flex-row gap-2">
+              <ion-note>$704</ion-note>
+              <ion-note>Payments</ion-note>
+            </div>
+          </div>
+          <ion-label slot="end">20/03/25</ion-label>
+        </ion-item>
+      </div>
     </div>
 
-    <ion-segment-view>
-      <ion-segment-content id="financeSummary" class="main-content-container">
-
-        <div class="w-full flex flex-row justify-end p-1">
-          <ion-select interface="popover" value="paymentCycle" toggleIcon="filter" class="w-fit">
-            <ion-select-option value="paymentCycle">Payment cycle</ion-select-option>
-            <ion-select-option value="month">This month</ion-select-option>
-            <ion-select-option value="quarter">This quarter</ion-select-option>
-            <ion-select-option value="year">This year</ion-select-option>
-          </ion-select>
-        </div>
-
-        <div class="h-30 w-full">
-          <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
-        </div>
-
-        <div class="card-container">
-          <div class="flex flex-column justify-between items-center">
-            <h3>Payment cycle</h3>
-            <div class="">March 13 to 19</div>
-          </div>
-          <div class="flex flex-row gap-3">
-            <ion-button color="secondary">
-              <ion-icon slot="start" name="add" color="success"></ion-icon>
-              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>
-            </ion-button>
-            <ion-button color="secondary">
-              <ion-icon slot="start" name="remove" color="danger"></ion-icon>
-              $12,320
-            </ion-button>
-          </div>
-        </div>
-
-        <div class="card-container">
-          <h3>AI Alerts <ion-badge color="danger" class="p-1">11</ion-badge></h3>
-          <div class="flex flex-col gap-2">
-            <ion-button color="secondary">
-              <div class="flex flex-row gap-3 w-full items-center justify-start text-left">
-                <ion-icon slot="start" name="notifications-outline" class="text-2xl"></ion-icon>
-                <div class="flex flex-col gap-1">
-                  <strong>Internet service might be unpayable</strong>
-                  <span class="font-normal">Not enough money to pay</span>
-                </div>
-              </div>
-
-            </ion-button>
-
-            <ion-button color="secondary">
-              <div class="flex flex-row gap-3 w-full items-center justify-start text-left">
-                <ion-icon slot="start" name="notifications-outline" class="text-2xl"></ion-icon>
-                <div class="flex flex-col gap-1">
-                  <strong>Internet service might be unpayable</strong>
-                  <span class="font-normal">Not enough money to pay</span>
-                </div>
-              </div>
-            </ion-button>
-          </div>
-        </div>
-
-      </ion-segment-content>
-
-      <ion-segment-content id="aiForecasts">
-        AI Forecasts content goes here.
-      </ion-segment-content>
-    </ion-segment-view>
-
   </div>
-
 </ion-content>
