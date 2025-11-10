@@ -1,17 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, Signal, ViewChild, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonList, IonNote, IonContent, IonButton, IonLabel, IonIcon, IonItem, IonChip, IonPopover, IonRadioGroup, IonRadio, IonModal, IonSearchbar, IonAvatar } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { addIcons } from 'ionicons';
-import { chevronForward, filter, add, remove, notifications, notificationsOutline, pin, calendarOutline, close, calendar, arrowUpOutline, arrowUpCircleOutline, arrowDownCircleOutline, searchOutline, closeOutline, search } from 'ionicons/icons';
+import { chevronForward, filter, add, remove, notifications, notificationsOutline, pin, calendarOutline, close, calendar, arrowUpOutline, arrowUpCircleOutline, arrowDownCircleOutline, searchOutline, closeOutline, search, ellipse } from 'ionicons/icons';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ChartConfiguration, ChartData,  } from 'chart.js';
 import { NumberFlowComponent } from 'src/app/shared/components/number-flow/number-flow.component';
 import { Format } from 'number-flow';
-import { currencyNumberFlowFormat } from 'src/app/shared/classes/number-constants';
+import { currencyNumberFlowFormat } from 'src/app/shared/utils/number-constants';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBowlRice, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { Item } from 'src/app/shared/interfaces/item.interface';
+import { findItem } from 'src/app/shared/utils/item-utils';
+import { datePeriodFilterItems, typeFilterItems } from './constants/summary-filter-constants';
 
 @Component({
   selector: 'app-summary',
@@ -25,6 +28,9 @@ import { faBowlRice, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 })
 export class SummaryPage implements OnInit {
 
+  datePeriod: WritableSignal<Item> = signal(findItem("paymentCycle", datePeriodFilterItems)!);
+  type: WritableSignal<Item> = signal(findItem("all", typeFilterItems)!);
+
   faBowlRice = faBowlRice;
   faBriefcase = faBriefcase;
 
@@ -37,12 +43,7 @@ export class SummaryPage implements OnInit {
     // We use these empty structures as placeholders for dynamic theming.
     indexAxis: "y",
     animation: false,
-    elements: {
-      bar: {
-        borderWidth: 4,
-        borderColor: "transparent",
-      }
-    },
+    elements: {},
     scales: {
       x: {
         stacked: true,
@@ -56,29 +57,9 @@ export class SummaryPage implements OnInit {
     },
     responsive: true,
     maintainAspectRatio: false,
-    onClick(event, elements, chart) {
-        console.log(event, elements);
-    },
     plugins: {
-      legend: {
-        display: true,
-        position: "bottom",
-        align: "start",
-        labels: {
-          font: {
-            family: "'Manrope', sans-serif",
-            size: 16,
-            weight: 400,
-          },
-          useBorderRadius: true,
-          borderRadius: 8,
-          boxWidth: 14,
-          boxHeight: 14,
-        }
-      },
-      tooltip: {
-        enabled: false,
-      }
+      legend: { display: false },
+      tooltip: { enabled: false },
     },
   };
 
@@ -94,7 +75,7 @@ export class SummaryPage implements OnInit {
   constructor(
     
   ) {
-    addIcons({search,filter,close,arrowDownCircleOutline,arrowUpCircleOutline,arrowUpOutline,add,calendarOutline,remove,notificationsOutline,pin,notifications,chevronForward,});
+    addIcons({filter,ellipse,search,close,arrowDownCircleOutline,arrowUpCircleOutline,arrowUpOutline,add,calendarOutline,remove,notificationsOutline,pin,notifications,chevronForward,});
   }
 
   ngOnInit() {
@@ -106,6 +87,30 @@ export class SummaryPage implements OnInit {
         this.value = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
       }, 500);
     }
+  }
+
+  datePeriodChanged({detail}: any) {
+    this.datePeriod.set(
+      findItem(detail.value, datePeriodFilterItems)!
+    );
+  }
+  typeChanged({detail}: any) {
+    this.type.set(
+      findItem(detail.value, typeFilterItems)!
+    );
+  }
+  spentTypeChanged({detail}: any) {
+
+  }
+  resetSpentTypeFilter() {
+    
+  }
+
+  get datePeriodFilterItems() {
+    return datePeriodFilterItems;
+  }
+  get typeFilterItems() {
+    return typeFilterItems;
   }
 
 }

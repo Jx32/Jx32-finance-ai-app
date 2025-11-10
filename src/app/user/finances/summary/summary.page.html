@@ -6,7 +6,7 @@
 
     <div class="card-container">
       <div class="w-full items-center justify-start flex flex-row gap-2">
-        <ion-button size="small" color="medium" fill="dark" shape="round" slot="start" id="filter-popover">
+        <ion-button size="small" color="medium" shape="round" slot="start" id="filter-popover">
           <ion-icon slot="icon-only" name="filter"></ion-icon>
         </ion-button>
         
@@ -14,55 +14,110 @@
           <ng-template>
             <ion-content>
               <div class="flex flex-col items-start justify-start gap-2 py-4 w-full">
-                <div class="text-neutral-500 text-sm font-bold">
-                  Filter
+                <div class="flex flex-row gap-2 w-full">
+                  <div class="flex flex-col gap-2 w-full">
+                    
+                    <div class="text-neutral-500 text-sm font-bold">
+                      Date period
+                    </div>
+                    <ion-radio-group value="paymentCycle" (ionChange)="datePeriodChanged($event)">
+                      <ion-list>
+                        @for (filterItem of datePeriodFilterItems; track filterItem.value) {
+                          <ion-item lines="none">
+                            <ion-radio [value]="filterItem.value">
+                              {{filterItem.name}}
+                              @if (filterItem.helperTextCallback) {
+                                <br /><span class="text-neutral-500">{{filterItem.helperTextCallback()}}</span>
+                              }
+                            </ion-radio>
+                          </ion-item>
+                        }
+                      </ion-list>
+                    </ion-radio-group>
+                  </div>
+
+                  <div class="flex flex-col gap-2 w-full">
+                    <div class="text-neutral-500 text-sm font-bold">
+                      Type
+                    </div>
+
+                    <ion-radio-group value="all" (ionChange)="typeChanged($event)">
+                      <ion-list>
+                        @for (filterItem of typeFilterItems; track filterItem.value) {
+                          <ion-item lines="none">
+                            <ion-radio [value]="filterItem.value">
+                              {{filterItem.name}}
+                              @if (filterItem.helperTextCallback) {
+                                <br /><span class="text-neutral-500">{{filterItem.helperTextCallback()}}</span>
+                              }
+                            </ion-radio>
+                          </ion-item>
+                        }
+                      </ion-list>
+                    </ion-radio-group>
+                  </div>
+
                 </div>
-                <ion-radio-group value="paymentCycle">
-                  <ion-list>
-                    <ion-item lines="none">
-                      <ion-radio value="paymentCycle">
-                        Payment cycle<br />
-                        <span class="text-neutral-500">March 15 to 31</span>
-                      </ion-radio>
-                    </ion-item>
-                    <ion-item lines="none">
-                      <ion-radio value="thisMonth">
-                        This month<br />
-                        <span class="text-neutral-500">March</span>
-                      </ion-radio>
-                    </ion-item>
-                    <ion-item lines="none">
-                      <ion-radio value="lastTwoMonths">
-                        Last 2 months<br />
-                        <span class="text-neutral-500">January, February</span>
-                      </ion-radio>
-                    </ion-item>
-                    <ion-item lines="none">
-                      <ion-radio value="lastSixMonths">
-                        Last 6 months<br />
-                        <span class="text-neutral-500">July 2024 to February 2025</span>
-                      </ion-radio>
-                    </ion-item>
-                    <ion-item lines="none">
-                      <ion-radio value="thisYear">
-                        This year<br />
-                        <span class="text-neutral-500">2025</span>
-                      </ion-radio>
-                    </ion-item>
-                  </ion-list>
-                </ion-radio-group>
               </div>
             </ion-content>
           </ng-template>
         </ion-popover>
 
         <ion-chip color="medium" slot="start">
-          <ion-label>Payment cycle <span class="text-neutral-500 ">— March 15 to 31</span></ion-label>
+          <ion-label>{{datePeriod().name}}</ion-label>
+        </ion-chip>
+        <ion-chip color="medium" slot="start">
+          <ion-label>{{type().name}}</ion-label>
         </ion-chip>
       </div>
 
-      <div class="h-30 w-full">
+      <div class="h-20 w-full">
         <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
+      </div>
+
+      <div class="w-full flex flex-row items-center justify-between gap-2">
+
+        <ion-radio-group (ionChange)="spentTypeChanged($event)">
+            <ion-item lines="none" class="w-fit inline-flex">
+              <ion-radio [value]="'deliveryFood'">
+                <div class="flex flex-row gap-2 items-center">
+                  <ion-icon name="ellipse" class="text-neutral-200"></ion-icon>
+                  Delivery food <span class="text-neutral-500">— 50%</span>
+                </div>
+              </ion-radio>
+            </ion-item>
+
+            <ion-item lines="none" class="w-fit inline-flex">
+              <ion-radio [value]="'services'">
+                <div class="flex flex-row gap-2 items-center">
+                  <ion-icon name="ellipse" class="text-neutral-300"></ion-icon>
+                  Services <span class="text-neutral-500">— 20%</span>
+                </div>
+              </ion-radio>
+            </ion-item>
+
+            <ion-item lines="none" class="w-fit inline-flex">
+              <ion-radio [value]="'loans'">
+                <div class="flex flex-row gap-2 items-center">
+                  <ion-icon name="ellipse" class="text-neutral-400"></ion-icon>
+                  Loans <span class="text-neutral-500">— 30%</span>
+                </div>
+              </ion-radio>
+            </ion-item>
+        </ion-radio-group>
+        
+        <!-- <ion-button color="medium" fill="outline" size="small">
+          <ion-icon name="ellipse" class="text-neutral-200"></ion-icon>
+          Delivery food
+        </ion-button>
+        <ion-button color="medium" fill="outline" size="small">
+          <ion-icon name="ellipse" class="text-neutral-300"></ion-icon>
+          Services
+        </ion-button>
+        <ion-button color="medium" fill="outline" size="small">
+          <ion-icon name="ellipse" class="text-neutral-400"></ion-icon>
+          Loans
+        </ion-button> -->
       </div>
 
       <div class="card-container">
@@ -70,7 +125,7 @@
           Balance
         </div>
         <div class="flex flex-row justify-evenly items-center">
-          <div class="flex flex-col items-start justify-center">
+          <div class="flex flex-col items-start justify-center bg-neutral-100">
             <div class="font-bold flex flex-row gap-2 items-center text-green-700">
               <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
             </div>
@@ -80,8 +135,8 @@
           <div class="text-xl font-bold text-neutral-500">-</div>
 
           <div class="flex flex-col items-start justify-center">
-            <div class="font-bold flex flex-row gap-2 items-center text-red-700">
-              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
+            <div class="font-bold flex flex-col` gap-2 items-center text-red-700">
+              <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>
             </div>
             <div class="text-neutral-500">Spent</div>
           </div>
@@ -102,10 +157,13 @@
         <div class="text-lg font-bold">Details</div>
 
         <div>
-          <ion-searchbar placeholder="Search" animated="true" searchIcon="search" inputmode="search" enterkeyhint="search" debounce="1000" cancelButtonIcon="close" clearIcon="close"></ion-searchbar>
-          <div class="text-sm text-neutral-500">
-            Found 5 results
-          </div>
+          <ion-searchbar placeholder="Search" animated="true" searchIcon="search" inputmode="search" enterkeyhint="search" debounce="1000" cancelButtonIcon="close" clearIcon="close" spellcheck="true"></ion-searchbar>
+
+          @if (false) {
+            <div class="text-sm text-neutral-500">
+              Found 5 results
+            </div>
+          }
         </div>
 
         <!-- Detail list -->

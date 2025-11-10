@@ -1,5 +1,35 @@
 @use "./custom-theme.scss";
 
+/* IonRadio customizations */
+ion-radio-group {
+    @apply w-full
+}
+ion-radio {
+    @apply items-center
+}
+/* END IonRadio customization */
+
+/* IonRadio within IonItem customizations */
+ion-item {
+    --border-radius: 12px;
+}
+ion-item ion-radio::part(container) {
+    --color-checked: theme("colors.blue.900");
+}
+ion-item:has(ion-radio.radio-checked) {
+    --background: theme("colors.blue.200");
+    --color: theme("colors.blue.900");
+    
+    @apply font-bold
+}
+ion-item:has(ion-radio) ion-icon {
+    @apply transition-all duration-250
+}
+ion-item:has(ion-radio.radio-checked) ion-icon {
+    @apply fill-blue-900
+}
+/* END IonRadioGroup customization */
+
 // Remove bottom toolbar gray border
 ion-toolbar:last-of-type {
     --border-width: 0 !important;
@@ -72,19 +102,19 @@ ion-select:focus::part(icon) {
 
 /* IonPopover customization */
 ion-popover {
-    --width: 70vw;
+    --width: 98vw;
 
     @media (width > 48rem) {
-        --width: 50vw;
+        --width: 60vw;
     }
     @media (width > 64rem) {
-        --width: 40vw;
+        --width: 50vw;
     }
     @media (width > 80rem) {
-        --width: 30vw;
+        --width: 40vwt;
     }
     @media (width > 96rem) {
-        --width: 20vw;
+        --width: 30vw;
     }
 }
 /* END IonPopover customization */
