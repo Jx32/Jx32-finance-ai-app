@@ -1,17 +1,30 @@
 @use "./custom-theme.scss";
 
 /* IonRadio customizations */
-ion-radio-group {
-    @apply w-full
+ion-radio-group .radio-group-wrapper {
+    @apply flex flex-row gap-2 flex-wrap justify-start items-center
 }
 ion-radio {
-    @apply items-center
+    @apply justify-center items-start transition-all duration-250
+}
+ion-radio .radio-wrapper {
+    @apply w-full
+}
+ion-radio::part(label) {
+    @apply mb-0 mt-0 py-2
 }
 /* END IonRadio customization */
+
+/* IonList customizations */
+ion-list {
+    @apply flex! flex-col gap-2
+}
+/* END IonList customizations */
 
 /* IonRadio within IonItem customizations */
 ion-item {
     --border-radius: 12px;
+    --background: transparent;
 }
 ion-item ion-radio::part(container) {
     --color-checked: theme("colors.blue.900");
@@ -119,62 +132,7 @@ ion-popover {
 }
 /* END IonPopover customization */
 
-/* Select popover customization */
-ion-popover.select-popover,
-ion-select-popover {
-    --box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-    --background: theme("colors.dark");
-
-    @apply transition-all duration-250 p-2 backdrop-grayscale-25 border-0 border-transparent border-none;
-}
-ion-popover.select-popover ion-list {
-    @apply bg-transparent
-}
-ion-popover.select-popover ion-content {
-    --padding-start: --spacing(4);
-    --padding-end: --spacing(4);
-    --pading-top: --spacing(2);
-    --pading-bottom: --spacing(2);
-    --background: transparent;
-
-    @apply overflow-hidden
-}
-ion-popover.select-popover ion-radio-group {
-    @apply w-full
-}
-ion-popover.select-popover ion-item {
-    --border-width: 0px;
-    --border-style: none;
-    --border-color: transparent;
-    --background: transparent;
-    --color: theme("colors.light");
-    --border-radius: 12px;
-
-    // fade in animation
-    transform: translateY(-10px);
-    opacity: 0;
-    animation: var(--animate-fade-in);
-
-    // increment delay for each item
-    @for $i from 10 through 1 {
-        &:nth-child(#{$i}) {
-            animation-delay: #{($i * 0.1)}s;
-        }
-    }
-
-    @apply py-1 rounded-xl transition-all duration-250
-}
-ion-popover.select-popover ion-item ion-radio::part(container) {
-    --color-checked: theme("colors.blue.900");
-}
-ion-popover.select-popover ion-item:has(ion-radio.radio-checked) {
-    --background: theme("colors.blue.200");
-    --color: theme("colors.blue.900");
-    --color-checked: theme("colors.blue.900");
-    
-    @apply font-bold
-}
-
+/* IonSelect customization */
 ion-select::part(icon) {
     padding-left: --spacing(3);
 }
@@ -188,7 +146,10 @@ ion-select::part(icon) {
 
 /* Card customizations */
 .card-container {
-    @apply flex flex-col rounded-xl gap-3 py-3 w-full
+    @apply flex flex-col rounded-xl gap-8 py-4 w-full
+}
+.content-container {
+    @apply rounded-xl bg-neutral-100 p-4 w-full
 }
 
 ion-card.alert-card {
@@ -208,11 +169,37 @@ ion-chip {
 
 /* Input customizations */
 ion-searchbar {
-    --placeholder-color: theme("colors.neutral.500");
+    @apply px-4! py-2! min-h-lh! border-2 border-neutral-200 rounded-xl
+}
+ion-searchbar.sc-ion-searchbar-ios-h {
     --icon-color: theme("colors.neutral.500");
+    --placeholder-color: theme("colors.neutral.500");
     --placeholder-font-weight: 400;
-
-    @apply px-0! p-0!
+    
+    @apply transition-all duration-[1s] text-neutral-500
+}
+ion-searchbar ion-icon {
+    @apply transition-all duration-[1s]
+}
+ion-searchbar:not(:disabled):hover {
+    @apply border-neutral-500 duration-250
+}
+ion-searchbar:not(:disabled):hover ion-icon {
+    @apply text-neutral-500 duration-250
+}
+ion-searchbar:not(:disabled):focus-within {
+    @apply border-primary bg-neutral-50 duration-250 shadow-md shadow-neutral-200 text-neutral-900
+}
+ion-searchbar:not(:disabled):focus-within ion-icon {
+    @apply text-primary duration-250
+}
+ion-searchbar .searchbar-clear-icon {
+    @apply opacity-0 animate-fade-in-blurry
+}
+.searchbar-input.sc-ion-searchbar-ios {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 /* END Input customization */
 
@@ -221,15 +208,14 @@ ion-note {
 }
 
 .fade-in-ion-items ion-item {
-    // fade in animation
     transform: translateY(-10px);
-    opacity: 0;
-    animation: var(--animate-fade-in);
 
     // increment delay for each item
-    @for $i from 100 through 1 {
+    @for $i from 1 through 100 {
         &:nth-child(#{$i}) {
             animation-delay: #{($i * 0.1)}s;
         }
     }
+
+    @apply opacity-0 animate-fade-in-blurry
 }

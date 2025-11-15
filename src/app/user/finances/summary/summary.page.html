@@ -10,17 +10,17 @@
           <ion-icon slot="icon-only" name="filter"></ion-icon>
         </ion-button>
         
-        <ion-popover trigger="filter-popover" triggerAction="click" class="select-popover">
+        <ion-popover trigger="filter-popover" #filterPopover triggerAction="click">
           <ng-template>
             <ion-content>
-              <div class="flex flex-col items-start justify-start gap-2 py-4 w-full">
-                <div class="flex flex-row gap-2 w-full">
-                  <div class="flex flex-col gap-2 w-full">
+              <div class="flex flex-row justify-between py-4 w-full gap-1">
+
+                  <div class="flex flex-col gap-2">
                     
                     <div class="text-neutral-500 text-sm font-bold">
                       Date period
                     </div>
-                    <ion-radio-group value="paymentCycle" (ionChange)="datePeriodChanged($event)">
+                    <ion-radio-group value="paymentCycle" (ionChange)="datePeriodChanged($event)" class="fade-in-ion-items">
                       <ion-list>
                         @for (filterItem of datePeriodFilterItems; track filterItem.value) {
                           <ion-item lines="none">
@@ -36,19 +36,20 @@
                     </ion-radio-group>
                   </div>
 
-                  <div class="flex flex-col gap-2 w-full">
+                  <div class="flex flex-col gap-2">
                     <div class="text-neutral-500 text-sm font-bold">
                       Type
                     </div>
 
-                    <ion-radio-group value="all" (ionChange)="typeChanged($event)">
+                    <ion-radio-group value="all" (ionChange)="typeChanged($event)" class="fade-in-ion-items">
                       <ion-list>
                         @for (filterItem of typeFilterItems; track filterItem.value) {
                           <ion-item lines="none">
-                            <ion-radio [value]="filterItem.value">
-                              {{filterItem.name}}
+                            <ion-radio [value]="filterItem.value" class="flex flex-col">
+                              <div [innerHTML]="filterItem.name"></div>
+
                               @if (filterItem.helperTextCallback) {
-                                <br /><span class="text-neutral-500">{{filterItem.helperTextCallback()}}</span>
+                                <div class="text-neutral-500" [innerHTML]="filterItem.helperTextCallback()"></div>
                               }
                             </ion-radio>
                           </ion-item>
@@ -57,138 +58,149 @@
                     </ion-radio-group>
                   </div>
 
-                </div>
               </div>
             </ion-content>
           </ng-template>
         </ion-popover>
 
-        <ion-chip color="medium" slot="start">
+        <ion-chip color="medium" slot="start" class="pointer-events-none">
           <ion-label>{{datePeriod().name}}</ion-label>
         </ion-chip>
-        <ion-chip color="medium" slot="start">
+        <ion-chip color="medium" slot="start" class="pointer-events-none">
           <ion-label>{{type().name}}</ion-label>
         </ion-chip>
       </div>
 
-      <div class="h-20 w-full">
-        <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
+      <div class="w-full flex flex-col gap-2">
+        <div class="h-20 w-full">
+          <canvas baseChart [data]="barChartData" type="bar" [options]="barChartOptions"></canvas>
+        </div>
+
+        <div class="w-full flex flex-row items-center justify-between gap-2">
+
+          <ion-radio-group (ionChange)="spentTypeChanged($event)" [value]="'all'">
+              <ion-item lines="none" class="w-fit inline-flex">
+                <ion-radio [value]="'all'">
+                  <div class="flex flex-row gap-2 items-center">
+                    All
+                  </div>
+                </ion-radio>
+              </ion-item>
+
+              <ion-item lines="none" class="w-fit inline-flex">
+                <ion-radio [value]="'deliveryFood'">
+                  <div class="flex flex-row gap-2 items-center">
+                    <ion-icon name="ellipse" class="text-neutral-200"></ion-icon>
+                    Delivery food <span class="text-neutral-500">— 50%</span>
+                  </div>
+                </ion-radio>
+              </ion-item>
+
+              <ion-item lines="none" class="w-fit inline-flex">
+                <ion-radio [value]="'services'">
+                  <div class="flex flex-row gap-2 items-center">
+                    <ion-icon name="ellipse" class="text-neutral-300"></ion-icon>
+                    Services <span class="text-neutral-500">— 20%</span>
+                  </div>
+                </ion-radio>
+              </ion-item>
+
+              <ion-item lines="none" class="w-fit inline-flex">
+                <ion-radio [value]="'loans'">
+                  <div class="flex flex-row gap-2 items-center">
+                    <ion-icon name="ellipse" class="text-neutral-400"></ion-icon>
+                    Loans <span class="text-neutral-500">— 30%</span>
+                  </div>
+                </ion-radio>
+              </ion-item>
+          </ion-radio-group>
+        </div>
       </div>
 
-      <div class="w-full flex flex-row items-center justify-between gap-2">
-
-        <ion-radio-group (ionChange)="spentTypeChanged($event)">
-            <ion-item lines="none" class="w-fit inline-flex">
-              <ion-radio [value]="'deliveryFood'">
-                <div class="flex flex-row gap-2 items-center">
-                  <ion-icon name="ellipse" class="text-neutral-200"></ion-icon>
-                  Delivery food <span class="text-neutral-500">— 50%</span>
-                </div>
-              </ion-radio>
-            </ion-item>
-
-            <ion-item lines="none" class="w-fit inline-flex">
-              <ion-radio [value]="'services'">
-                <div class="flex flex-row gap-2 items-center">
-                  <ion-icon name="ellipse" class="text-neutral-300"></ion-icon>
-                  Services <span class="text-neutral-500">— 20%</span>
-                </div>
-              </ion-radio>
-            </ion-item>
-
-            <ion-item lines="none" class="w-fit inline-flex">
-              <ion-radio [value]="'loans'">
-                <div class="flex flex-row gap-2 items-center">
-                  <ion-icon name="ellipse" class="text-neutral-400"></ion-icon>
-                  Loans <span class="text-neutral-500">— 30%</span>
-                </div>
-              </ion-radio>
-            </ion-item>
-        </ion-radio-group>
-        
-        <!-- <ion-button color="medium" fill="outline" size="small">
-          <ion-icon name="ellipse" class="text-neutral-200"></ion-icon>
-          Delivery food
-        </ion-button>
-        <ion-button color="medium" fill="outline" size="small">
-          <ion-icon name="ellipse" class="text-neutral-300"></ion-icon>
-          Services
-        </ion-button>
-        <ion-button color="medium" fill="outline" size="small">
-          <ion-icon name="ellipse" class="text-neutral-400"></ion-icon>
-          Loans
-        </ion-button> -->
-      </div>
-
-      <div class="card-container">
+      <div class="card-container content-container">
         <div class="text-lg font-bold">
           Balance
         </div>
-        <div class="flex flex-row justify-evenly items-center">
-          <div class="flex flex-col items-start justify-center bg-neutral-100">
+        <div class="flex flex-row justify-center items-center gap-6">
+          <div class="flex flex-col items-start justify-center">
+            <div class="text-neutral-500 text-sm">Earned</div>
             <div class="font-bold flex flex-row gap-2 items-center text-green-700">
+              <ion-icon name="chevron-up-outline"></ion-icon>
               <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
             </div>
-            <div class="text-neutral-500">Earned</div>
           </div>
 
           <div class="text-xl font-bold text-neutral-500">-</div>
 
           <div class="flex flex-col items-start justify-center">
+            <div class="text-neutral-500 text-sm">Spent</div>
             <div class="font-bold flex flex-col` gap-2 items-center text-red-700">
+              <ion-icon name="chevron-down-outline"></ion-icon>
               <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>
             </div>
-            <div class="text-neutral-500">Spent</div>
           </div>
 
           <div class="text-xl font-bold text-neutral-500">=</div>
           
           <div class="flex flex-col items-start justify-center">
+            <div class="text-neutral-500 text-sm">Remaining</div>
             <div class="font-bold flex flex-row gap-2 items-center">
               <app-number-flow [value]="value" [animated]="true" [format]="currencyNumberFlowFormat"></app-number-flow>          
             </div>
-            <div class="text-neutral-500">Remaining</div>
           </div>
 
         </div>
       </div>
 
-      <div class="card-container fade-in-ion-items">
-        <div class="text-lg font-bold">Details</div>
-
-        <div>
-          <ion-searchbar placeholder="Search" animated="true" searchIcon="search" inputmode="search" enterkeyhint="search" debounce="1000" cancelButtonIcon="close" clearIcon="close" spellcheck="true"></ion-searchbar>
-
-          @if (false) {
-            <div class="text-sm text-neutral-500">
-              Found 5 results
-            </div>
-          }
+      <div class="card-container content-container fade-in-ion-items">
+        <div class="w-full flex flex-row justify-between items-start">
+          <div class="text-lg font-bold">Details</div>
+          
+          <ion-searchbar 
+            placeholder="Search" animated="false" searchIcon="search" 
+            inputmode="search" enterkeyhint="search" debounce="1000" 
+            cancelButtonIcon="close" clearIcon="close" spellcheck="true"
+            class="w-50! focus-within:sm:w-60! focus-within:md:w-80!"
+          ></ion-searchbar>
         </div>
 
         <!-- Detail list -->
         <ion-item lines="none">
-          <fa-icon [icon]="faBowlRice" slot="start" class="text-red-700" />
           <div class="flex flex-col" slot="start">
-            <ion-label>Chinese Raise</ion-label>
+            <ion-label><span class="text-lg">🍜</span> Chinese Raise</ion-label>
             <div class="flex flex-row gap-2">
-              <ion-note>-$10</ion-note>
-              <ion-note>Delivery food</ion-note>
+
+              <ion-chip color="danger">
+                <ion-icon name="chevron-down-outline"></ion-icon>
+                <ion-label>$10</ion-label>
+              </ion-chip>
+
+              <ion-chip color="medium">
+                <ion-label>Delivery food</ion-label>
+              </ion-chip>
             </div>
+
           </div>
           <ion-label slot="end">15/03/25</ion-label>
         </ion-item>
 
         <ion-item lines="none">
-          <fa-icon [icon]="faBriefcase" slot="start" class="text-green-700" />
-          <div class="flex flex-col">
-            <ion-label>Work payment</ion-label>
+          <div class="flex flex-col" slot="start">
+            <ion-label><span class="text-lg">💼</span> Work payment</ion-label>
             <div class="flex flex-row gap-2">
-              <ion-note>$704</ion-note>
-              <ion-note>Payments</ion-note>
+
+              <ion-chip color="success">
+                <ion-icon name="chevron-up-outline"></ion-icon>
+                <ion-label>$700</ion-label>
+              </ion-chip>
+
+              <ion-chip color="medium">
+                <ion-label>Work payment</ion-label>
+              </ion-chip>
             </div>
+
           </div>
-          <ion-label slot="end">20/03/25</ion-label>
+          <ion-label slot="end">15/03/25</ion-label>
         </ion-item>
       </div>
     </div>

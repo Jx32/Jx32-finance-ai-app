@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonList, IonNote, IonContent, IonButton, IonLabel, IonIcon, IonItem, IonChip, IonPopover, IonRadioGroup, IonRadio, IonModal, IonSearchbar, IonAvatar } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { addIcons } from 'ionicons';
-import { chevronForward, filter, add, remove, notifications, notificationsOutline, pin, calendarOutline, close, calendar, arrowUpOutline, arrowUpCircleOutline, arrowDownCircleOutline, searchOutline, closeOutline, search, ellipse } from 'ionicons/icons';
+import { chevronForward, filter, add, remove, notifications, notificationsOutline, pin, calendarOutline, close, calendar, arrowUpOutline, arrowUpCircleOutline, arrowDownCircleOutline, searchOutline, closeOutline, search, ellipse, chevronUpOutline, chevronDownOutline } from 'ionicons/icons';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ChartConfiguration, ChartData,  } from 'chart.js';
 import { NumberFlowComponent } from 'src/app/shared/components/number-flow/number-flow.component';
@@ -40,7 +40,6 @@ export class SummaryPage implements OnInit {
   currencyNumberFlowFormat: Format = currencyNumberFlowFormat;
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
     indexAxis: "y",
     animation: false,
     elements: {},
@@ -75,7 +74,7 @@ export class SummaryPage implements OnInit {
   constructor(
     
   ) {
-    addIcons({filter,ellipse,search,close,arrowDownCircleOutline,arrowUpCircleOutline,arrowUpOutline,add,calendarOutline,remove,notificationsOutline,pin,notifications,chevronForward,});
+    addIcons({filter,ellipse,chevronUpOutline,chevronDownOutline,search,close,arrowDownCircleOutline,arrowUpCircleOutline,arrowUpOutline,add,calendarOutline,remove,notificationsOutline,pin,notifications,chevronForward,});
   }
 
   ngOnInit() {
@@ -100,7 +99,7 @@ export class SummaryPage implements OnInit {
     );
   }
   spentTypeChanged({detail}: any) {
-
+    
   }
   resetSpentTypeFilter() {
     

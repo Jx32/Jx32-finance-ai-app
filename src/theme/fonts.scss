@@ -71,3 +71,9 @@ small {
 ion-button {
   @apply font-bold;
 }
+
+ion-title.title-default {
+  letter-spacing: 0.0035px;
+  
+  @apply font-serif font-bold text-lg
+}

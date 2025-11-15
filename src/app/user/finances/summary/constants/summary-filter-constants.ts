@@ -59,7 +59,7 @@ export const datePeriodFilterItems: FilterItem[] = [
 ]
 
 export const typeFilterItems: FilterItem[] = [
-    { name: "All", value: "all" },
+    { name: "Earnings & spents", value: "all" },
     { name: "Earnings", value: "earnings" },
     { name: "Spents", value: "spents" },
 ]
